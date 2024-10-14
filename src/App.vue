@@ -25,7 +25,7 @@
     <v-app-bar class="ps-4" flat>
       <v-app-bar-nav-icon v-if="$vuetify.display.smAndDown" @click="drawer = !drawer" />
 
-      <v-app-bar-title>Application</v-app-bar-title>
+      <v-app-bar-title>LOL</v-app-bar-title>
 
       <template #append>
         <v-btn class="text-none me-2" height="48" icon slim>
