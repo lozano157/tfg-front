@@ -16,6 +16,7 @@
           <v-list-item-title>{{ item.title }}</v-list-item-title>
         </v-list-item>
         </v-list>
+        
 
       <template #append>
         <v-list-item class="ma-2" link nav prepend-icon="mdi-cog-outline" title="Settings" />
