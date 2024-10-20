@@ -27,6 +27,7 @@ export default {
   mounted() {
     // Inicializa el mapa
     const apikey = import.meta.env.VITE_MAPLIBRE_API_KEY;
+    console.log(apikey);
     const map = new maplibregl.Map({
       container: 'map',
       style: 'https://api.maptiler.com/maps/streets/style.json?key=' + apikey,
