@@ -24,16 +24,13 @@ export default {
       favorites: [], // Array de favoritos
     };
   },
-  mounted() {
-    // Inicializa el mapa
+  async mounted() {
+    // Inicializa el mapa de manera asíncrona
     const apikey = import.meta.env.VITE_MAPLIBRE_API_KEY;
     console.log(apikey);
-    const map = new maplibregl.Map({
-      container: 'map',
-      style: 'https://api.maptiler.com/maps/streets/style.json?key=' + apikey,
-      center: [2.154007, 41.390205], // Barcelona
-      zoom: 10,
-    });
+
+    // Cargar el mapa de manera asíncrona
+    const map = await this.initializeMap(apikey);
 
     // Realiza una consulta para obtener los datos de los marcadores
     this.fetchMarkersData().then(data => {
@@ -46,6 +43,20 @@ export default {
     });
   },
   methods: {
+    async initializeMap(apikey) {
+      return new Promise((resolve) => {
+        const map = new maplibregl.Map({
+          container: 'map',
+          style: 'https://api.maptiler.com/maps/basic/style.json?key=' + apikey, // Estilo más ligero
+          center: [-0.3785, 39.4699], // Barcelona
+          zoom: 15,
+        });
+
+        map.on('load', () => {
+          resolve(map);
+        });
+      });
+    },
     async fetchMarkersData() {
       // Simulación de consulta a una API
       return [
