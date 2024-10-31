@@ -17,6 +17,7 @@
     "@types/node": "^22.7.5",
     "@vitejs/plugin-vue-jsx": "^4.0.1",
     "@vue/tsconfig": "^0.5.1",
+    "axios": "^1.7.7",
     "devextreme": "^24.1.4",
     "devextreme-vue": "^24.1.4",
     "maplibre-gl": "^4.7.1",
