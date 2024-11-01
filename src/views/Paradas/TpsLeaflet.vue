@@ -44,7 +44,7 @@ export default {
       return new Promise((resolve) => {
         const map = new maplibregl.Map({
           container: 'map',
-          style: `https://api.maptiler.com/maps/basic/style.json?key=${apiKey}`,
+          style: `https://api.maptiler.com/maps/streets/style.json?key=${apiKey}`,
           center: [-0.3785, 39.4699],
           zoom: 12,
         });
