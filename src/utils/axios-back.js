@@ -1,11 +1,11 @@
 import axios from 'axios'
 
-const axiosApp = axios.create({
+const axiosBack = axios.create({
     baseURL: import.meta.env.VITE_BASE_APP_URL+'/',
     headers: {
       'Content-Type': 'application/json',
-      'appOrigin':'TPSVALENCIABUS'
+      'appOrigin':'TPSVALENCIA'
     }
   })
 
-export default axiosApp
+export default axiosBack

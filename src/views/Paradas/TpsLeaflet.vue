@@ -14,11 +14,13 @@
 <script>
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
+import BackServices from "@/services/srv-back";
 
 export default {
   name: "MapLibreComponent",
   data() {
     return {
+      BackServices,
       markersData: {
         type: "FeatureCollection",
         features: [
@@ -35,6 +37,7 @@ export default {
     };
   },
   async mounted() {
+    await this.fetchMarkers();
     const map = await this.initializeMap(import.meta.env.VITE_MAPLIBRE_API_KEY);
     this.addMapLayers(map);
     this.getUserLocation(map); // Obtiene la ubicación del usuario
@@ -138,7 +141,13 @@ export default {
         console.error("Geolocalización no está disponible en este navegador.");
       }
     },
+    async fetchMarkers() {
+      const response = await this.BackServices.fGetMarkers();
+      console.log(response);
+      this.markersData = response;
+    }
   },
+
 };
 </script>
 
