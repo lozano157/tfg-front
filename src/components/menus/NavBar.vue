@@ -40,6 +40,11 @@ export default {
                     title: this.$t('MENU.Favoritos'),
                     prependIcon: 'mdi-map-marker-star',
                     link: '/favoritos'
+                },
+                {
+                    title: this.$t('MENU.Pruebas'),
+                    prependIcon: 'mdi-pipe',
+                    link: '/pruebas'
                 }
             ],
         }
