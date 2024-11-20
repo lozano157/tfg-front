@@ -1,5 +1,8 @@
 <template>
-    <v-navigation-drawer>
+    <v-navigation-drawer
+        expand-on-hover
+        rail
+    >
         <v-list density="compact" nav>
             <v-list-item v-for="item in items" :key="item.title" :value="item" color="primary"
                 @click="$router.push(item.link)">

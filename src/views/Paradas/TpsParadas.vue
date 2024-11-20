@@ -1,14 +1,54 @@
 <template>
-  <div>
-    <div id="map" style="height: 500px; width: 100%;"></div>
-    <div v-if="selectedMarker" class="card">
-      <h3>ID de parada: {{ selectedMarker.id_parada }}</h3>
-      <p>Tipo: {{ selectedMarker.tipo }}</p>
-      <v-btn @click="toggleFavorite(selectedMarker)" :color="isFavorite(selectedMarker) ? 'yellow' : 'grey'">
-        <v-icon>{{ isFavorite(selectedMarker) ? 'mdi-star' : 'mdi-star-outline' }}</v-icon>
-      </v-btn>
-    </div>
-  </div>
+  <v-row style="height: 100%; margin: 0;">
+    <!-- Columna del mapa -->
+    <v-col :cols="selectedMarker ? 9:12" p-0 style="height:90vh;">
+      <div id="map" style="height: 100%; width: 100%;"></div>
+    </v-col>
+
+    <!-- Columna de la tarjeta -->
+    <v-col :cols="selectedMarker ? 3:0" >
+      <v-card v-if="selectedMarker" class="card pa-0" style="height: 86vh;">
+        <div class="card-content">
+          <v-col cols="12">
+            <h3>ID de parada: {{ selectedMarker.id_parada }}</h3>
+          </v-col>
+          <v-col cols="12">
+            <p>Tipo: {{ selectedMarker.tipo }}</p>
+          </v-col>
+          <v-col cols="12" class="text-center">
+            <v-btn
+              @click="toggleFavorite(selectedMarker)"
+              :color="isFavorite(selectedMarker) ? 'yellow' : 'grey'"
+            >
+              <v-icon>{{ isFavorite(selectedMarker) ? 'mdi-star' : 'mdi-star-outline' }}</v-icon>
+            </v-btn>
+          </v-col>
+        </div>
+
+        <v-card-actions class="bottom-tabs">
+          <v-tabs
+            v-model="tab"
+            align-tabs="center"
+            stacked
+            style="width: 100%"
+          >
+            <v-tab value="tab-1">
+              <v-icon icon="mdi-phone"></v-icon>
+              Recents
+            </v-tab>
+            <v-tab value="tab-2">
+              <v-icon icon="mdi-heart"></v-icon>
+              Favorites
+            </v-tab>
+            <v-tab value="tab-3">
+              <v-icon icon="mdi-account-box"></v-icon>
+              Nearby
+            </v-tab>
+          </v-tabs>
+        </v-card-actions>
+      </v-card>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
@@ -147,17 +187,35 @@ export default {
       this.markersData = response;
     }
   },
-
 };
 </script>
 
-<style>
+<style scoped>
 .card {
   background: white;
   border: 1px solid #ccc;
-  padding: 15px;
   border-radius: 5px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   margin-top: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-content {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 56px; /* Altura del tabs para evitar superposición */
+}
+
+.bottom-tabs {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  margin: 0;
+  padding: 0;
+  z-index: 1;
 }
 </style>

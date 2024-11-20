@@ -6,7 +6,7 @@ const router = createRouter({
     {
       path: '/paradas',
       name: 'paradas',
-      component: () => import('../views/Paradas/TpsLeaflet.vue')
+      component: () => import('../views/Paradas/TpsParadas.vue')
     },
     {
       path: '/pruebas',
