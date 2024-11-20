@@ -33,16 +33,16 @@
             style="width: 100%"
           >
             <v-tab value="tab-1">
-              <v-icon icon="mdi-phone"></v-icon>
-              Recents
+              <v-icon icon="mdi-information-outline"></v-icon>
+              General
             </v-tab>
             <v-tab value="tab-2">
-              <v-icon icon="mdi-heart"></v-icon>
-              Favorites
+              <v-icon icon="mdi-bus-multiple"></v-icon>
+              Lineas
             </v-tab>
             <v-tab value="tab-3">
-              <v-icon icon="mdi-account-box"></v-icon>
-              Nearby
+              <v-icon icon="mdi-bus-alert"></v-icon>
+              Avisos
             </v-tab>
           </v-tabs>
         </v-card-actions>
