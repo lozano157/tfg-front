@@ -4,5 +4,30 @@
     "Alertas": "Alertas",
     "Favoritos": "Favoritos",
     "Logout": "Cerrar sesión"
+  },
+  "LOGIN":{
+    "Login": "Iniciar sesión",
+    "Email": "Correo electrónico",
+    "Password": "Contraseña",
+    "Remember": "Recordar",
+    "Forgot": "¿Olvidaste tu contraseña?",
+    "Register": "Registrarse"
+  },
+  "REGISTER":{
+    "Register": "Registrarse",
+    "Email": "Correo electrónico",
+    "Password": "Contraseña",
+    "Confirm": "Confirmar contraseña"
+  },
+  "INFO_CARD":{
+    "General": "General",
+    "Proximos": "Próximos",
+    "Avisos": "Avisos"
+  },
+  "TIPOS":{
+    "EMT": "EMT",
+    "METROVALENCIA": "METROVALENCIA",
+    "VALENBISI": "VALENBISI"
   }
+
 }
