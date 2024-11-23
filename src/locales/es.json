@@ -28,6 +28,10 @@
     "EMT": "EMT",
     "METROVALENCIA": "METROVALENCIA",
     "VALENBISI": "VALENBISI"
+  },
+  "ACCIONES":{
+    "Anyadir_favorito": "Añadir a favoritos",
+    "Eliminar_favorito": "Eliminar de favoritos"
   }
 
 }
