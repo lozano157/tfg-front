@@ -1,24 +1,15 @@
 <template>
   <v-card v-if="selectedMarker" class="card pa-0" style="height: 86vh; position: relative;">
     <div class="card-content">
-      <v-col cols="12">
-        <v-row>
-          <v-col cols="6" sm="6" class="text-left mt-1">
-            <b>{{ $t('TIPOS.EMT') }}</b>
-          </v-col>
-          <v-col cols="6" sm="6" class="text-right">
-                    <v-btn density="compact" variant="text"  icon @click="fCloseCard">
-                        <v-icon>mdi-close</v-icon>
-                    </v-btn>
-                </v-col>
-        </v-row>
-      </v-col>
-      <v-col cols="12">
-        <h3>ID de parada: {{ selectedMarker.id_parada }}</h3>
-      </v-col>
-      <v-col cols="12">
-        <p>Tipo: {{ selectedMarker.tipo }}</p>
-      </v-col>
+      <v-tabs-window v-model="tab">
+        <v-tabs-window-item value="tab-1">
+          <TpsGeneralEmtInfo :selectedMarker="selectedMarker" />
+        </v-tabs-window-item>
+        <v-tabs-window-item value="tab-2">
+          Two
+        </v-tabs-window-item>
+
+      </v-tabs-window>
       <v-col cols="12" class="text-center">
         <v-btn
           @click="toggleFavorite(selectedMarker)"
@@ -26,21 +17,21 @@
           :prepend-icon="isFavorite(selectedMarker) ? 'mdi-star' : 'mdi-star-outline'"
           class="favorite-btn"
         >
-         <!-- <v-icon>{{ isFavorite(selectedMarker) ? 'mdi-star' : 'mdi-star-outline' }} </v-icon>-->
           {{ isFavorite(selectedMarker) ?  $t('ACCIONES.Eliminar_favorito') : $t('ACCIONES.Anyadir_favorito') }}
         </v-btn>
       </v-col>
     </div>
+    
 
     <v-card-actions class="bottom-tabs">
       <v-tabs v-model="tab" align-tabs="center" stacked style="width: 100%">
         <v-tab value="tab-1">
           <v-icon icon="mdi-information-outline"></v-icon>
-          General
+          {{$t('INFO_CARD.General')}}
         </v-tab>
         <v-tab value="tab-2">
           <v-icon icon="mdi-bus-alert"></v-icon>
-          Avisos
+          {{$t('INFO_CARD.Avisos')}}
         </v-tab>
       </v-tabs>
     </v-card-actions>
@@ -50,11 +41,13 @@
 <script>
 import BackServices from '@/services/srv-back'
 import BackEmtServices from '@/services/srv-back-emt'
+import TpsGeneralEmtInfo from '@/components/emt/TpsGeneralEmtInfo.vue'
 
 
 
 export default {
     emits: ['closeCard', 'toggleFavorite'],
+    components: { TpsGeneralEmtInfo },
     props: {
         selectedMarker: Object
     },
@@ -63,7 +56,6 @@ export default {
             BackEmtServices,
             tab: 'tab-1',
             favorites: [],
-            dDatosParada: {}
         }
     },
     methods:{
@@ -77,30 +69,10 @@ export default {
           const index = this.favorites.indexOf(marker.id_parada)
           index === -1 ? this.favorites.push(marker.id_parada) : this.favorites.splice(index, 1)
         },
-        async fGetParadaById(){
-            const payload = {
-                id: this.selectedMarker.id_parada
-            }
-            const response = await this.BackEmtServices.fGetParadaById(payload)
-            console.log(response)
-            debugger
-
-        },
         fGetFavoriteEmtStops(){
 
         }
     },
-    async mounted() {
-        await this.fGetParadaById()
-    },
-    watch: {
-        selectedMarker: {
-            handler: function (val) {
-                this.fGetParadaById()
-            },
-            deep: true
-        }
-    }
 }
 </script>
 

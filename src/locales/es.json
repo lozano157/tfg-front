@@ -32,6 +32,13 @@
   "ACCIONES":{
     "Anyadir_favorito": "Añadir a favoritos",
     "Eliminar_favorito": "Eliminar de favoritos"
+  },
+  "EMT":{
+    "Linea": "Línea",
+    "Parada": "Parada",
+    "Destino": "Destino",
+    "Minutos": "Minutos",
+    "Nombre_parada": "Nombre de la parada"
   }
 
 }
