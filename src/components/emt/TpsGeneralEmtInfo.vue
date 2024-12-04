@@ -19,10 +19,10 @@
       <v-row>
         <v-col v-for="item in dHorariosParada" :key="item" cols="12">
             <v-row>
-              <v-col cols="2">
-                <img :src="item.imagen" alt="Imagen de la linea" style="width: 30px; height: auto;">
+              <v-col cols="2" class="mt-1">
+                <img :src="item.imagen" alt="Imagen de la linea"  width="30px" height="30px">
               </v-col>
-              <v-col cols="10" class="mt-1">
+              <v-col cols="10" class="mt-2">
                 <p>{{ item.texto }}</p>
               </v-col>
             </v-row>
