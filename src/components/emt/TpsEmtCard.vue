@@ -6,9 +6,17 @@
           <TpsGeneralEmtInfo :selectedMarker="selectedMarker" />
         </v-tabs-window-item>
         <v-tabs-window-item value="tab-2">
-          Two
-        </v-tabs-window-item>
+          <!-- Widget de Twitter -->
+          <div ref="twitterContainer" style="height: 100%; overflow: auto;">
+            <a
+              class="twitter-timeline"
+              href="https://twitter.com/vuejs?ref_src=twsrc%5Etfw"
+            >
+              Tweets by VueJS
 
+            </a>
+          </div>
+        </v-tabs-window-item>
       </v-tabs-window>
       <v-col cols="12" class="text-center">
         <v-btn
@@ -17,11 +25,10 @@
           :prepend-icon="isFavorite(selectedMarker) ? 'mdi-star' : 'mdi-star-outline'"
           class="favorite-btn"
         >
-          {{ isFavorite(selectedMarker) ?  $t('ACCIONES.Eliminar_favorito') : $t('ACCIONES.Anyadir_favorito') }}
+          {{ isFavorite(selectedMarker) ? $t('ACCIONES.Eliminar_favorito') : $t('ACCIONES.Anyadir_favorito') }}
         </v-btn>
       </v-col>
     </div>
-    
 
     <v-card-actions class="bottom-tabs">
       <v-tabs v-model="tab" align-tabs="center" stacked style="width: 100%">
@@ -39,41 +46,60 @@
 </template>
 
 <script>
-import BackServices from '@/services/srv-back'
-import BackEmtServices from '@/services/srv-back-emt'
-import TpsGeneralEmtInfo from '@/components/emt/TpsGeneralEmtInfo.vue'
-
-
+import BackServices from "@/services/srv-back";
+import TpsGeneralEmtInfo from "@/components/emt/TpsGeneralEmtInfo.vue";
 
 export default {
-    emits: ['closeCard', 'toggleFavorite'],
-    components: { TpsGeneralEmtInfo },
-    props: {
-        selectedMarker: Object
+  emits: ["closeCard", "toggleFavorite"],
+  components: { TpsGeneralEmtInfo },
+  props: {
+    selectedMarker: Object,
+  },
+  data() {
+    return {
+      tab: "tab-1",
+      favorites: [],
+    };
+  },
+  watch: {
+    tab(newValue) {
+      if (newValue === "tab-2") {
+        this.initTwitterWidget();
+      }
     },
-    data() {
-        return {
-            BackEmtServices,
-            tab: 'tab-1',
-            favorites: [],
-        }
+  },
+  methods: {
+    isFavorite(marker) {
+      return this.favorites.includes(marker.id_parada);
     },
-    methods:{
-        isFavorite(marker) {
-            return this.favorites.includes(marker.id_parada)
-        },
-        fCloseCard(){
-            this.$emit('closeCard')
-        },
-        toggleFavorite(marker) {
-          const index = this.favorites.indexOf(marker.id_parada)
-          index === -1 ? this.favorites.push(marker.id_parada) : this.favorites.splice(index, 1)
-        },
-        fGetFavoriteEmtStops(){
-
-        }
+    toggleFavorite(marker) {
+      const index = this.favorites.indexOf(marker.id_parada);
+      if (index === -1) {
+        this.favorites.push(marker.id_parada);
+      } else {
+        this.favorites.splice(index, 1);
+      }
     },
-}
+    initTwitterWidget() {
+      // Asegúrate de que el script de Twitter esté cargado
+      if (window.twttr && window.twttr.widgets) {
+        window.twttr.widgets.load(this.$refs.twitterContainer);
+      } else {
+        console.error("El script de Twitter no está cargado.");
+      }
+    },
+  },
+  created() {
+    // Cargar el script de Twitter una sola vez
+    if (!document.querySelector('script[src="https://platform.twitter.com/widgets.js"]')) {
+      const script = document.createElement("script");
+      script.src = "https://platform.twitter.com/widgets.js";
+      script.async = true;
+      script.charset = "utf-8";
+      document.head.appendChild(script);
+    }
+  },
+};
 </script>
 
 <style scoped>
