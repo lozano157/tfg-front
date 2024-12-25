@@ -48,6 +48,11 @@ export default {
                     title: this.$t('MENU.Pruebas'),
                     prependIcon: 'mdi-pipe',
                     link: '/pruebas'
+                },
+                {
+                    title: this.$t('MENU.LOGIN'),
+                    prependIcon: 'mdi-pipe',
+                    link: '/login'
                 }
             ],
         }

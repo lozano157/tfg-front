@@ -13,6 +13,7 @@
 import { RouterView } from 'vue-router'
 import NavBar from '@/components/menus/NavBar.vue'
 import AppBar from '@/components/menus/AppBar.vue'
+import { getSession } from '@/composable/useAuth.js'
 
 export default {
   components: {
@@ -20,6 +21,9 @@ export default {
     AppBar,
     RouterView,
   },
+  mounted(){
+    getSession();
+  }
 }
 </script>
 
