@@ -1,4 +1,5 @@
 import { useSupabase } from "./useSupabase";
+
 const { supabase } = useSupabase();
 
 
@@ -7,7 +8,13 @@ export async function login  ( email ) {
     const user = await supabase.from('tps_usuario').select()
     console.log('user', user)
     debugger
-    const { data, error } = await supabase.auth.signInWithOtp({email})
+    const { data, error } = await supabase.auth.signInWithOtp({
+        email,
+        options: { 
+            redirectTo: import.meta.env.VITE_API_URL
+}
+    
+    })
     if (error){
         console.log('error', error)
         throw error
