@@ -7,6 +7,8 @@ export async function login  ( email ) {
     console.log('email', email)
     const user = await supabase.from('tps_usuario').select()
     console.log('user', user)
+    let url = import.meta.env.VITE_API_URL + '/paradas'
+    console.log('url', url)
     debugger
     const { data, error } = await supabase.auth.signInWithOtp({
         email,
