@@ -11,8 +11,8 @@ export async function login  ( email ) {
     const { data, error } = await supabase.auth.signInWithOtp({
         email,
         options: { 
-            redirectTo: import.meta.env.VITE_API_URL
-}
+            emailRedirectTo: import.meta.env.VITE_API_URL + '/paradas'
+        }
     
     })
     if (error){
