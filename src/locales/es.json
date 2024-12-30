@@ -39,6 +39,13 @@
     "Destino": "Destino",
     "Minutos": "Minutos",
     "Nombre_parada": "Nombre de la parada"
+  },
+  "MENU_USUARIO":{
+    "Perfil": "Perfil",
+    "Favoritos": "Favoritos",
+    "Logout": "Cerrar sesión",
+    "Iniciar_sesion": "Iniciar sesión",
+    "Cerrar_sesion": "Cerrar sesión"
   }
 
 }

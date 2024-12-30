@@ -54,10 +54,17 @@
     ></v-autocomplete>
     Selected street: {{ selectedStreet }}
   </v-container>
+  <MenuNotLogged />
 </template>
 
 <script>
+
+import MenuNotLogged from "@/components/login/MenuNotLogged.vue";
+
 export default {
+    components: {
+        MenuNotLogged,
+    },
     data() {
         return {
             liked: false,

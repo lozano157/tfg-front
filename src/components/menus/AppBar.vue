@@ -9,6 +9,8 @@
                 <v-avatar color="surface-light" image="https://cdn.vuetifyjs.com/images/john.png" size="32" />
 
                 <v-menu activator="parent">
+                    <MenuNotLogged v-if="!isLogged" />
+                    <MenuLogged v-else />
                 </v-menu>
             </v-btn>
         </template>
@@ -16,10 +18,24 @@
 </template>
 
 <script>
+
+import MenuNotLogged from '@/components/login/MenuNotLogged.vue'
+import MenuLogged from '@/components/login/MenuLogged.vue'
+
 export default {
+    components: {
+        MenuNotLogged,
+        MenuLogged
+    },
     methods: {
         fActiveNavBar() {
             this.$store.commit('setVisible', true)
+        }
+    },
+    computed: {
+        // Computed property que comprueba si hay un token en el localStorage
+        isLogged() {
+            return !!localStorage.getItem('sb-sjobgbzfbmlqikjxwjli-auth-token');
         }
     }
 }
