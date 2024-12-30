@@ -1,8 +1,8 @@
 <template>
     <v-app-bar class="ps-4" flat>
-        <v-app-bar-nav-icon v-if="$vuetify.display.smAndDown" @click="drawer = !drawer" />
+        <v-app-bar-nav-icon v-if="$vuetify.display.smAndDown" @click="fActiveNavBar" />
 
-        <v-app-bar-title>LOL</v-app-bar-title>
+        <!--<v-app-bar-title>LOL</v-app-bar-title>-->
 
         <template #append>
             <v-btn class="text-none me-2" height="48" icon slim>
@@ -14,3 +14,13 @@
         </template>
     </v-app-bar>
 </template>
+
+<script>
+export default {
+    methods: {
+        fActiveNavBar() {
+            this.$store.commit('setVisible', true)
+        }
+    }
+}
+</script>

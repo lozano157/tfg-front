@@ -3,19 +3,10 @@
     <div class="card-content">
       <v-tabs-window v-model="tab">
         <v-tabs-window-item value="tab-1">
-          <TpsGeneralEmtInfo :selectedMarker="selectedMarker" />
+          <TpsGeneralEmtInfo @closeCard="fCloseCard" :selectedMarker="selectedMarker" />
         </v-tabs-window-item>
         <v-tabs-window-item value="tab-2">
-          <!-- Widget de Twitter -->
-          <div ref="twitterContainer" style="height: 100%; overflow: auto;">
-            <a
-              class="twitter-timeline"
-              href="https://twitter.com/vuejs?ref_src=twsrc%5Etfw"
-            >
-              Tweets by VueJS
-
-            </a>
-          </div>
+          
         </v-tabs-window-item>
       </v-tabs-window>
       <v-col cols="12" class="text-center">
@@ -61,14 +52,11 @@ export default {
       favorites: [],
     };
   },
-  watch: {
-    tab(newValue) {
-      if (newValue === "tab-2") {
-        this.initTwitterWidget();
-      }
-    },
-  },
+
   methods: {
+    fCloseCard() {
+      this.$emit("closeCard");
+    },
     isFavorite(marker) {
       return this.favorites.includes(marker.id_parada);
     },
@@ -80,24 +68,9 @@ export default {
         this.favorites.splice(index, 1);
       }
     },
-    initTwitterWidget() {
-      // Asegúrate de que el script de Twitter esté cargado
-      if (window.twttr && window.twttr.widgets) {
-        window.twttr.widgets.load(this.$refs.twitterContainer);
-      } else {
-        console.error("El script de Twitter no está cargado.");
-      }
-    },
+    
   },
   created() {
-    // Cargar el script de Twitter una sola vez
-    if (!document.querySelector('script[src="https://platform.twitter.com/widgets.js"]')) {
-      const script = document.createElement("script");
-      script.src = "https://platform.twitter.com/widgets.js";
-      script.async = true;
-      script.charset = "utf-8";
-      document.head.appendChild(script);
-    }
   },
 };
 </script>

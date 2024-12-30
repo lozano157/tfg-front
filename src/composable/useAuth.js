@@ -9,7 +9,6 @@ export async function login  ( email ) {
     console.log('user', user)
     let url = import.meta.env.VITE_API_URL + '/paradas'
     console.log('url', url)
-    debugger
     const { data, error } = await supabase.auth.signInWithOtp({
         email,
         options: { 

@@ -40,6 +40,7 @@ import BackEmtServices from '@/services/srv-back-emt'
 
 
 export default {
+    emits: ['closeCard'],
     props: {
         selectedMarker: Object
     },
