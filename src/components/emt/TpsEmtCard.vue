@@ -37,7 +37,6 @@
 </template>
 
 <script>
-import BackServices from "@/services/srv-back";
 import TpsGeneralEmtInfo from "@/components/emt/TpsGeneralEmtInfo.vue";
 
 export default {
@@ -81,7 +80,6 @@ export default {
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  margin-top: 10px;
   position: relative;
   display: flex;
   flex-direction: column;

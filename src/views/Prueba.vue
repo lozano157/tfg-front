@@ -81,7 +81,7 @@ export default {
     },
     methods: {
         async fCallRenfe(){
-            const url = `https://www.renfe.com/content/renfe/es/es/grupo-renfe/comunicacion/renfe-al-dia/avisos/jcr:content/root/responsivegrid/rfincidentreports_co.noticeresults.json`;
+            const url = `https://thingproxy.freeboard.io/fetch/https://www.renfe.com/content/renfe/es/es/grupo-renfe/comunicacion/renfe-al-dia/avisos/jcr:content/root/responsivegrid/rfincidentreports_co.noticeresults.json`;
             const response = await fetch(url);
             const data = await response.json();
             console.log(data);

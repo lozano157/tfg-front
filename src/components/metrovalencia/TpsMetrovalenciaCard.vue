@@ -1,44 +1,37 @@
 <template>
   <v-card v-if="selectedMarker" class="card pa-0" style="height: 86vh; position: relative;">
     <div class="card-content">
-      <v-col cols="12">
-        <v-row>
-          <v-col cols="6" sm="6" class="text-left mt-1">
-            <b>{{ $t('TIPOS.METROVALENCIA') }}</b>
-          </v-col>
-          <v-col cols="6" sm="6" class="text-right">
-                    <v-btn density="compact" variant="text"  icon @click="fCloseCard">
-                        <v-icon>mdi-close</v-icon>
-                    </v-btn>
-                </v-col>
-        </v-row>
-      </v-col>
-      <v-col cols="12">
-        <h3>ID de parada: {{ selectedMarker.id_parada }}</h3>
-      </v-col>
-      <v-col cols="12">
-        <p>Tipo: {{ selectedMarker.tipo }}</p>
-      </v-col>
+      <v-container>
+      <v-tabs-window v-model="tab">
+        <v-tabs-window-item value="tab-1">
+          <TpsGeneralMetrovalenciaInfo @closeCard="fCloseCard" :selectedMarker="selectedMarker" />
+        </v-tabs-window-item>
+        <v-tabs-window-item value="tab-2">
+          
+        </v-tabs-window-item>
+      </v-tabs-window>
       <v-col cols="12" class="text-center">
         <v-btn
           @click="toggleFavorite(selectedMarker)"
-          :color="isFavorite(selectedMarker) ? 'blue' : 'red'"
+          :color="isFavorite(selectedMarker) ? 'red' : 'blue'"
+          :prepend-icon="isFavorite(selectedMarker) ? 'mdi-star' : 'mdi-star-outline'"
           class="favorite-btn"
         >
-          <v-icon>{{ isFavorite(selectedMarker) ? 'mdi-star' : 'mdi-star-outline' }}</v-icon>
+          {{ isFavorite(selectedMarker) ? $t('ACCIONES.Eliminar_favorito') : $t('ACCIONES.Anyadir_favorito') }}
         </v-btn>
       </v-col>
+      </v-container>
     </div>
 
     <v-card-actions class="bottom-tabs">
       <v-tabs v-model="tab" align-tabs="center" stacked style="width: 100%">
         <v-tab value="tab-1">
           <v-icon icon="mdi-information-outline"></v-icon>
-          General
+          {{$t('INFO_CARD.General')}}
         </v-tab>
         <v-tab value="tab-2">
           <v-icon icon="mdi-bus-alert"></v-icon>
-          Avisos
+          {{$t('INFO_CARD.Avisos')}}
         </v-tab>
       </v-tabs>
     </v-card-actions>
@@ -46,30 +39,42 @@
 </template>
 
 <script>
+import BackServices from "@/services/srv-back";
+import TpsGeneralMetrovalenciaInfo from "@/components/metrovalencia/TpsGeneralMetrovalenciaInfo.vue";
+
 export default {
-    emits: ['closeCard', 'toggleFavorite'],
-    props: {
-        selectedMarker: Object
+  emits: ["closeCard", "toggleFavorite"],
+  components: { TpsGeneralMetrovalenciaInfo },
+  props: {
+    selectedMarker: Object,
+  },
+  data() {
+    return {
+      tab: "tab-1",
+      favorites: [],
+    };
+  },
+
+  methods: {
+    fCloseCard() {
+      this.$emit("closeCard");
     },
-    data() {
-        return {
-            tab: 'tab-1',
-            favorites: [],
-        }
+    isFavorite(marker) {
+      return this.favorites.includes(marker.id_parada);
     },
-    methods:{
-        isFavorite(marker) {
-            return this.favorites.includes(marker.id_parada)
-        },
-        fCloseCard(){
-            this.$emit('closeCard')
-        },
-        toggleFavorite(marker) {
-          const index = this.favorites.indexOf(marker.id_parada)
-          index === -1 ? this.favorites.push(marker.id_parada) : this.favorites.splice(index, 1)
-        },
-    }
-}
+    toggleFavorite(marker) {
+      const index = this.favorites.indexOf(marker.id_parada);
+      if (index === -1) {
+        this.favorites.push(marker.id_parada);
+      } else {
+        this.favorites.splice(index, 1);
+      }
+    },
+    
+  },
+  created() {
+  },
+};
 </script>
 
 <style scoped>
@@ -78,7 +83,6 @@ export default {
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  margin-top: 10px;
   position: relative;
   display: flex;
   flex-direction: column;

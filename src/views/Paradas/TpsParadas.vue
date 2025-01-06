@@ -1,12 +1,21 @@
 <template>
   <v-row style="height: 100%; margin: 0">
     <!-- Columna del mapa -->
-    <v-col :cols="selectedMarker ? 9 : 12" p-0 style="height: 90vh">
+    <v-col :cols="selectedMarker && !$vuetify.display.mobile?9: 12" p-0 style="height: 90vh">
       <div id="map" style="height: 100%; width: 100%"></div>
     </v-col>
 
-    <!-- Columna de la tarjeta -->
-    <v-col v-if="selectedMarker!=null" :cols="selectedMarker ? 3 : 0">
+    <!-- Bottom sheet para móviles -->
+    <v-bottom-sheet v-model="selectedMarker" style="border-radius:5px;" v-if="$vuetify.display.mobile">
+      <v-card>
+        <TpsEmtCard v-if="selectedMarker?.tipo=='emt'" :selectedMarker="selectedMarker" @closeCard="fCloseCard"></TpsEmtCard>
+        <TpsEmtValenbisi v-else-if="selectedMarker?.tipo=='valenbisi'" :selectedMarker="selectedMarker" @closeCard="fCloseCard"></TpsEmtValenbisi>
+        <TpsMetrovalenciaCard v-else-if="selectedMarker?.tipo=='fgv'" :selectedMarker="selectedMarker" @closeCard="fCloseCard"></TpsMetrovalenciaCard>
+      </v-card>
+    </v-bottom-sheet>
+
+    <!-- Columna lateral para desktop -->
+    <v-col v-if="selectedMarker && !$vuetify.display.mobile" :cols="3">
       <TpsEmtCard v-if="selectedMarker.tipo=='emt'" :selectedMarker="selectedMarker" @closeCard="fCloseCard"></TpsEmtCard>
       <TpsEmtValenbisi v-else-if="selectedMarker.tipo=='valenbisi'" :selectedMarker="selectedMarker" @closeCard="fCloseCard"></TpsEmtValenbisi>
       <TpsMetrovalenciaCard v-else-if="selectedMarker.tipo=='fgv'" :selectedMarker="selectedMarker" @closeCard="fCloseCard"></TpsMetrovalenciaCard>
