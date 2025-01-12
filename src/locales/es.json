@@ -47,6 +47,9 @@
     "Logout": "Cerrar sesión",
     "Iniciar_sesion": "Iniciar sesión",
     "Cerrar_sesion": "Cerrar sesión"
+  },
+  "USUARIOS":{
+    "Anonimo":"Usuario anónimo"
   }
 
 }

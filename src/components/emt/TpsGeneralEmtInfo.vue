@@ -55,7 +55,7 @@ export default {
     fCloseCard() {
       this.$emit('closeCard')
     },
-    async fGetParadaById(retryCount = 0, maxRetries = 5) {
+    async fGetParadaById(retryCount = 0, maxRetries = 20) {
       const payload = {
         id: this.selectedMarker.id_parada
       }
@@ -63,7 +63,7 @@ export default {
       try {
         const response = await this.BackEmtServices.fGetParadaById(payload)
 
-        if (!response.error) {
+        if (!response.status) {
           // Procesar la respuesta si es exitosa
           console.log(response) // eslint-disable-line no-console
 
@@ -72,6 +72,7 @@ export default {
 
           this.fGetHorariosParada(response)
         } else {
+          debugger
           if (retryCount < maxRetries) {
             console.log(`Retrying... (${retryCount + 1}/${maxRetries})`) // eslint-disable-line no-console
             await this.fGetParadaById(retryCount + 1, maxRetries)
@@ -81,6 +82,7 @@ export default {
           }
         }
       } catch (error) {
+        debugger
         console.error(error) // eslint-disable-line no-console
 
         if (retryCount < maxRetries) {
@@ -102,12 +104,12 @@ export default {
     }
   },
   async mounted() {
-    await this.fGetParadaById(0,5)
+    await this.fGetParadaById(0,20)
   },
   watch: {
     selectedMarker: {
       handler: function (val) {
-        this.fGetParadaById(0,5)
+        this.fGetParadaById(0,20)
       },
       deep: true
     }

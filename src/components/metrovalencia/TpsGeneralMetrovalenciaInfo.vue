@@ -50,6 +50,7 @@
 
 <script>
 import BackMetrovalenciaServices from '@/services/srv-back-metrovalencia'
+import BackServices from '@/services/srv-back'
 
 export default {
   emits: ['closeCard'],
@@ -58,6 +59,7 @@ export default {
   },
   data() {
     return {
+      BackServices,
       BackMetrovalenciaServices,
       dDatosParada: null,
       dHorariosParada: null,
@@ -65,18 +67,42 @@ export default {
     }
   },
   methods: {
-    toggleFavorite(marker) {
-      /*const index = this.favorites.indexOf(marker.id_parada)
-      if (index === -1) {
-        this.favorites.push(marker.id_parada)
+    async toggleFavorite(marker) {
+      console.log(marker)
+      const tokenData = localStorage.getItem('sb-sjobgbzfbmlqikjxwjli-auth-token'); 
+      let parsedData = null;
+      if (tokenData) {
+        parsedData = JSON.parse(tokenData); // Convierte la cadena en objeto
       } else {
-        this.favorites.splice(index, 1)
-      }*/
+        console.error('No se encontró el token en localStorage'); // eslint-disable-line no-console
+        alert('Debes iniciar sesión para añadir paradas a favoritos') // eslint-disable-line no-console
+        return
+      }
+
+      const payload = {
+        idParada: marker.id_parada,
+        idUsuario: tokenData ? parsedData.user.id : null,
+        idTransporte: 2
+      }
+
+      if(this.isFavourite) {
+        const response = await this.BackServices.fDeleteFavourite(payload)
+        if(response.status == "success") {
+          this.isFavourite = false
+        }
+      } else {
+        const response = await this.BackServices.fAddFavourite(payload)
+        if(response.status == "success") {
+          this.isFavourite = true
+        }
+        
+      }
+
     },
     fCloseCard() {
       this.$emit('closeCard')
     },
-    async fGetParadaById(retryCount = 0, maxRetries = 5) {
+    async fGetParadaById(retryCount = 0, maxRetries = 20) {
       const tokenData = localStorage.getItem('sb-sjobgbzfbmlqikjxwjli-auth-token'); 
       let parsedData = null;
       if (tokenData) {
@@ -94,7 +120,7 @@ export default {
       try {
         const response = await this.BackMetrovalenciaServices.fGetParadaById(payload)
         console.log(response) // eslint-disable-line no-console
-        if (!response.error ) {
+        if (!response.status ) {
           // Procesar la respuesta si es exitosa
           console.log(response) // eslint-disable-line no-console
           this.isFavourite = tokenData ? response.favourite : false
@@ -134,12 +160,12 @@ export default {
     }
   },
   async mounted() {
-    await this.fGetParadaById(0, 5)
+    await this.fGetParadaById(0, 20)
   },
   watch: {
     selectedMarker: {
       handler: function (val) {
-        this.fGetParadaById(0, 5)
+        this.fGetParadaById(0, 20)
       },
       deep: true
     }
