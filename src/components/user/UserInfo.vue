@@ -35,7 +35,6 @@ export default {
                     this.name = data.username;
                 }
             }catch(e){
-                alert(e.message);
             }finally{
                 this.loading = false;
             }

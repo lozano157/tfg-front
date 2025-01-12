@@ -56,7 +56,7 @@ export default {
             items: [
                 {
                     title: this.$t('MENU.Paradas'),
-                    prependIcon: 'mdi-view-dashboard-outline',
+                    prependIcon: 'mdi-bus-marker',
                     link: '/paradas'
                 },
                 {

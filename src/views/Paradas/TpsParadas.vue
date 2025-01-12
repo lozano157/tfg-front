@@ -6,8 +6,8 @@
     </v-col>
 
     <!-- Bottom sheet para móviles -->
-    <v-bottom-sheet v-model="selectedMarker" style="border-radius:5px;" v-if="$vuetify.display.mobile">
-      <v-card>
+    <v-bottom-sheet v-model="selectedMarker" style="border-radius:5px; margin-top:0px;" v-if="$vuetify.display.mobile">
+      <v-card class="mt-0"> 
         <TpsEmtCard v-if="selectedMarker?.tipo=='emt'" :selectedMarker="selectedMarker" @closeCard="fCloseCard"></TpsEmtCard>
         <TpsEmtValenbisi v-else-if="selectedMarker?.tipo=='valenbisi'" :selectedMarker="selectedMarker" @closeCard="fCloseCard"></TpsEmtValenbisi>
         <TpsMetrovalenciaCard v-else-if="selectedMarker?.tipo=='fgv'" :selectedMarker="selectedMarker" @closeCard="fCloseCard"></TpsMetrovalenciaCard>

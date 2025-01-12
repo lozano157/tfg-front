@@ -1,5 +1,5 @@
 <template>
-  <v-card v-if="selectedMarker" class="card pa-0" style="height: 86vh; position: relative;">
+  <v-card v-if="selectedMarker" class="card pa-0" :class="{ 'mt-0 ': $vuetify.display.mobile }" style="height: 86vh; position: relative;">
     <div class="card-content">
       <v-tabs-window v-model="tab">
         <v-tabs-window-item value="tab-1">

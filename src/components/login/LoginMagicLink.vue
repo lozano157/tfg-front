@@ -30,7 +30,6 @@ export default {
                 this.loading = true;
                 await login(this.email);
             }catch(e){
-                alert(e.message);
             }finally{
                 this.loading = false;
             }

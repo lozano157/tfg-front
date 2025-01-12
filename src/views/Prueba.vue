@@ -85,12 +85,12 @@ export default {
             const response = await fetch(url);
             const data = await response.json();
             console.log(data);
-            debugger
+            
         },
         prueba(prueba){
             console.log(prueba)
             this.selectedStreet = prueba.text
-            debugger
+            
         },
         toggleLike() {
             this.liked = !this.liked;
@@ -134,7 +134,7 @@ export default {
                 value: street,          // Guardamos el objeto completo para selectedStreet
                 }));
                 console.log("fetchStreets", this.streets);
-                debugger
+                
                 //si term está en this.streets entonces this.selectedStreet = term
                 if (this.streets.find(street => street.text2 === term)) {
                     this.selectedStreet = term;
