@@ -1,7 +1,16 @@
 <template>
   <v-row style="height: 100%; margin: 0">
+
+    <v-col class="mb-0 pb-0 d-flex align-center">
+      <p class="text-h5 font-weight-bold mt-1 mb-0">
+      PARADAS
+      </p>
+      <v-btn rounded="xl" class="ml-4" :active="dFilterByFavorites" @click="dFilterByFavorites = !dFilterByFavorites">
+        FAVORITAS
+      </v-btn>
+    </v-col>
     <!-- Columna del mapa -->
-    <v-col :cols="selectedMarker && !$vuetify.display.mobile?9: 12" p-0 style="height: 90vh">
+    <v-col :cols="selectedMarker && !$vuetify.display.mobile?9: 12" p-0 style="height: 85vh" class="pt-2">
       <div id="map" style="height: 100%; width: 100%"></div>
     </v-col>
 
@@ -36,6 +45,7 @@ export default {
   components: { TpsEmtCard, TpsEmtValenbisi, TpsMetrovalenciaCard },
   data() {
     return {
+      dFilterByFavorites: false, // Variable para filtrar por favoritos
       BackServices,
       markersData: {
         type: 'FeatureCollection',
@@ -73,10 +83,13 @@ export default {
     }
   },
   async mounted() {
-    await this.fetchMarkers()
-    const map = await this.initializeMap(import.meta.env.VITE_MAPLIBRE_API_KEY)
-    this.addMapLayers(map)
-    this.getUserLocation(map) // Obtiene la ubicación del usuario
+    const map = await this.initializeMap(import.meta.env.VITE_MAPLIBRE_API_KEY);
+    this.addMapLayers(map);
+    this.getUserLocation(map); // Obtiene la ubicación del usuario
+
+    // Carga los markers después de inicializar el mapa
+    await this.fetchMarkers();
+    map.getSource('markers').setData(this.markersData); // Actualiza los datos dinámicamente
   },
   methods: {
     async initializeMap(apiKey) {

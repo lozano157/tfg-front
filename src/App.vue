@@ -1,7 +1,13 @@
 <template>
   <v-layout style="height: 100vh; overflow: hidden; display: flex; flex-direction: column;">
-    <NavBar />
-    <AppBar />
+    <template v-if="!isLoginRoute">
+      <NavBar />
+      <AppBar />
+    </template>
+
+    <template v-if="isLoginRoute">
+      <AppBarLoginVue />
+    </template>
 
     <v-main style="flex-grow: 1; display: flex; flex-direction: column;">
       <router-view class="pa-4" style="flex-grow: 1; height: 100%;" />
@@ -14,17 +20,32 @@ import { RouterView } from 'vue-router'
 import NavBar from '@/components/menus/NavBar.vue'
 import AppBar from '@/components/menus/AppBar.vue'
 import { getSession } from '@/composable/useAuth.js'
+import AppBarLoginVue from './components/menus/AppBarLogin.vue'
 
 export default {
   components: {
+    AppBarLoginVue,
     NavBar,
     AppBar,
     RouterView,
   },
-  mounted(){
+  data() {
+    return {
+      isLoginRoute: false,
+    };
+  },
+  watch: {
+    '$route.path': {
+      immediate: true,
+      handler(newPath) {
+        this.isLoginRoute = newPath.includes('/login');
+      },
+    },
+  },
+  mounted() {
     getSession();
-  }
-}
+  },
+};
 </script>
 
 <style scoped>

@@ -1,5 +1,7 @@
 import { useSupabase } from "./useSupabase";
 
+import { useUser } from "./useUser";
+
 const { supabase } = useSupabase();
 
 
@@ -21,13 +23,18 @@ export async function login  ( email ) {
     } 
 }
 
-export async function getSession  ({ email }) {
-    const { data, error } = await supabase.auth.getSession()
+export async function getSession  () {
+
+    const { setUser } = useUser()
+    
+    
+        const { data, error } = await supabase.auth.getSession()
     
         if (error) throw error
     
         if (data.session && data.session.user) {
-          setUser(data.session.user)
+            console.log('data.session.user', data.session.user)
+            setUser(data.session.user)
         }
     
         return data.session

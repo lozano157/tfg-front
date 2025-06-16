@@ -5,13 +5,17 @@
         <!--<v-app-bar-title>LOL</v-app-bar-title>-->
 
         <template #append>
-            <v-btn class="text-none me-2" height="48" icon slim>
-                <v-avatar color="surface-light" image="https://cdn.vuetifyjs.com/images/john.png" size="32" />
+            <v-btn v-if="isLogged" class="text-none me-2" height="48" icon slim>
+                <v-avatar color="surface-light"  size="32" >
+                    <v-icon icon="mdi-account-circle"></v-icon>
+                </v-avatar>
 
                 <v-menu activator="parent">
-                    <MenuNotLogged v-if="!isLogged" />
-                    <MenuLogged v-else />
+                    <MenuLogged  />
                 </v-menu>
+            </v-btn>
+            <v-btn v-else variant="outlined"  @click="$router.push('/login')">
+                Iniciar sesión | registrarse
             </v-btn>
         </template>
     </v-app-bar>

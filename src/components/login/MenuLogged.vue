@@ -10,10 +10,18 @@
             <template v-slot:prepend>
                 <v-icon >mdi-login</v-icon>
             </template>
-            <v-list-item-title class="ml-0" >{{$t('MENU_USUARIO.Cerrar_sesion')}}</v-list-item-title>
+            <v-list-item-title class="ml-0" @click="fCloseSession" >{{$t('MENU_USUARIO.Cerrar_sesion')}}</v-list-item-title>
         </v-list-item>
     </v-list>
 </template>
 
 <script>
+
+export default {
+    methods: {
+        fCloseSession() {
+            this.localStorage.removeItem('sb-sjobgbzfbmlqikjxwjli-auth-token')
+        }
+    }
+}
 </script>
