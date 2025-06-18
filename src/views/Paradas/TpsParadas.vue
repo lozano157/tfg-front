@@ -1,7 +1,7 @@
 <template>
   <v-row style="height: 100%; margin: 0">
 
-    <v-col class="mb-0 pb-0 d-flex align-center">
+    <v-col cols="12" class="mb-0 pb-0 d-flex align-center">
       <p class="text-h5 font-weight-bold mt-1 mb-0">
       PARADAS
       </p>

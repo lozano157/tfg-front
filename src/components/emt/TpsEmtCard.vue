@@ -9,7 +9,7 @@
           
         </v-tabs-window-item>
       </v-tabs-window>
-      <v-col cols="12" class="text-center">
+      <!--<v-col cols="12" class="text-center">
         <v-btn
           @click="toggleFavorite(selectedMarker)"
           :color="isFavorite(selectedMarker) ? 'red' : 'blue'"
@@ -18,7 +18,7 @@
         >
           {{ isFavorite(selectedMarker) ? $t('ACCIONES.Eliminar_favorito') : $t('ACCIONES.Anyadir_favorito') }}
         </v-btn>
-      </v-col>
+      </v-col>-->
     </div>
 
     <v-card-actions class="bottom-tabs">
@@ -30,6 +30,10 @@
         <v-tab value="tab-2">
           <v-icon icon="mdi-bus-alert"></v-icon>
           {{$t('INFO_CARD.Avisos')}}
+        </v-tab>
+        <v-tab value="tab-3">
+          <v-icon icon="mdi-timer-alert-outline"></v-icon>
+          ALERTAS
         </v-tab>
       </v-tabs>
     </v-card-actions>

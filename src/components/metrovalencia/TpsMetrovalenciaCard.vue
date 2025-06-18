@@ -24,6 +24,10 @@
           <v-icon icon="mdi-bus-alert"></v-icon>
           {{$t('INFO_CARD.Avisos')}}
         </v-tab>
+        <v-tab value="tab-3">
+          <v-icon icon="mdi-timer-alert-outline"></v-icon>
+          ALERTAS
+        </v-tab>
       </v-tabs>
     </v-card-actions>
   </v-card>

@@ -1,9 +1,15 @@
 <template>
   <div>
-    <v-col cols="12">
+    <v-col cols="12" class="sticky-top">
       <v-row>
-        <v-col cols="6" sm="6" class="text-left mt-1">
-          <b>{{ $t('TIPOS.EMT') }}</b>
+        <v-col cols="6" sm="6" class="text-left mt-0">
+          <v-btn
+            @click="toggleFavorite(selectedMarker)"
+            :color="isFavourite ? 'red' : 'white'"
+            class="favorite-btn"
+          >
+            <v-icon :icon="isFavourite ? 'mdi-heart' : 'mdi-heart-outline'"></v-icon>
+          </v-btn>
         </v-col>
         <v-col cols="6" sm="6" class="text-right">
           <v-btn density="compact" variant="text" icon @click="fCloseCard">
@@ -12,6 +18,7 @@
         </v-col>
       </v-row>
     </v-col>
+
     <v-col cols="12" v-if="dDatosParada != null">
       <h3>{{ this.dDatosParada.denominacion }}</h3>
     </v-col>
@@ -135,13 +142,6 @@ export default {
   padding-bottom: 56px; /* Altura del tabs para evitar superposición */
 }
 
-.favorite-btn {
-  position: absolute;
-  bottom: 8vh; /* Ajusta según sea necesario */
-  left: 50%;
-  transform: translateX(-50%);
-}
-
 .bottom-tabs {
   position: absolute;
   bottom: 0;
@@ -151,5 +151,17 @@ export default {
   margin: 0;
   padding: 0;
   z-index: 1;
+}
+
+.sticky-top {
+  position: sticky;
+  top: 0;
+  background-color: white; /* Asegura que no se vea el fondo al hacer scroll */
+  z-index: 1; /* Mantiene la cabecera encima del contenido */
+}
+
+.scrollable-content {
+  max-height: 55vh; /* Ajusta la altura máxima según lo que necesites */
+  overflow-y: auto;
 }
 </style>
