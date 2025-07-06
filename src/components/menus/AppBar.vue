@@ -5,7 +5,7 @@
         <!--<v-app-bar-title>LOL</v-app-bar-title>-->
 
         <template #append>
-            <v-btn v-if="isLogged" class="text-none me-2" height="48" icon slim>
+            <v-btn v-if="isLogged" aria-label="Open options" class="text-none me-2" height="48" icon slim>
                 <v-avatar color="surface-light"  size="32" >
                     <v-icon icon="mdi-account-circle"></v-icon>
                 </v-avatar>
@@ -39,7 +39,7 @@ export default {
     computed: {
         // Computed property que comprueba si hay un token en el localStorage
         isLogged() {
-            return !!localStorage.getItem('sb-sjobgbzfbmlqikjxwjli-auth-token');
+            return this.$store.state.isAuthenticated;
         }
     }
 }

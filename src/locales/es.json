@@ -3,7 +3,8 @@
     "Paradas": "Paradas",
     "Alertas": "Alertas",
     "Favoritos": "Favoritos",
-    "Logout": "Cerrar sesión"
+    "Logout": "Cerrar sesión",
+    "Avisos": "Avisos"
   },
   "LOGIN":{
     "Login": "Iniciar sesión",

@@ -4,5 +4,10 @@
       "@/*": ["./src/*"]
     }
   },
+
+  "include": [
+    "src/**/*",
+    "cypress/**/*.js" // <-- Importante añadir esta línea
+  ],
   "exclude": ["node_modules", "dist"]
 }

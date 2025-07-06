@@ -1,24 +1,5 @@
 <template>
   <div>
-    <!-- Cabecera fija -->
-    <v-col cols="12" class="sticky-top">
-      <v-row>
-        <v-col cols="6" sm="6" class="text-left mt-0">
-          <v-btn
-            @click="toggleFavorite(selectedMarker)"
-            :color="isFavourite ? 'red' : 'white'"
-            class="favorite-btn"
-          >
-            <v-icon :icon="isFavourite ? 'mdi-heart' : 'mdi-heart-outline'"></v-icon>
-          </v-btn>
-        </v-col>
-        <v-col cols="6" sm="6" class="text-right">
-          <v-btn density="compact" variant="text" icon @click="fCloseCard">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-col>
-      </v-row>
-    </v-col>
 
     <!-- Nombre de la parada -->
     <v-col cols="12" v-if="dDatosParada != null" class="pb-1">

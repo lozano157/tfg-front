@@ -32,7 +32,7 @@
 <script>
 
 import MenuNotLogged from "@/components/login/MenuNotLogged.vue";
-import TpsAlert from "@/components/messages/TpsAlert.vue";
+import TpsAlert from "@/components/messages/TpsAlerts.vue";
 
 export default {
     components: {

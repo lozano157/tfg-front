@@ -1,0 +1,9 @@
+[
+  {
+    "idAlerta": 1,
+    "nombreParada": "Ayuntamiento",
+    "tipoTransporte": "EMT",
+    "mensaje": "Aviso inicial de prueba",
+    "fechaCreacion": "2025-07-06T10:00:00Z"
+  }
+]

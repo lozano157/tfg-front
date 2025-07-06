@@ -17,12 +17,22 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: () => import('../views/User/TpsLogin.vue')
-    }
-    /*{
+    },
+    {
+      path: '/alertas',
+      name: 'alertas',
+      component: () => import('../views/Alertas/TpsAlertasMailView.vue')
+    },
+    {
+      path:'/avisos',
+      name: 'avisos',
+      component: () => import('../views/Avisos/TpsAvisosUsuario.vue')
+    },
+    {
       path: '/favoritos',
       name: 'favoritos',
-      component: () => import('../views/FavoritosView.vue')
-    }*/
+      component: () => import('../views/Favoritos/TpsFavoritos.vue')
+    }
   ]
 })
 

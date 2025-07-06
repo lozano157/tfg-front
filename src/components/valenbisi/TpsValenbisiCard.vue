@@ -73,7 +73,6 @@ export default {
         // Aquí podrías cargar los datos de la parada si es necesario
         // Por ejemplo, hacer una llamada a un servicio para obtener más información
         console.log('Componente TpsValenbisiCard montado con parada:', this.selectedMarker);
-        debugger
     }
 }
 </script>

@@ -7,7 +7,7 @@ import 'vuetify/styles'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import '@mdi/font/css/materialdesignicons.css'
-import { store } from './stores/navBar'
+import { store } from './stores/store'
 
 const app = createApp(App)
 

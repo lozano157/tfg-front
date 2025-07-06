@@ -4,6 +4,8 @@ import { useUser } from "./useUser";
 
 const { supabase } = useSupabase();
 
+import {store} from '@/stores/store'
+
 
 export async function login  ( email ) {
     
@@ -23,6 +25,15 @@ export async function login  ( email ) {
     } 
 }
 
+export async function signOut() {
+  const { error } = await supabase.auth.signOut()
+
+  if (error){
+        console.log('error', error)
+        throw error
+  } 
+}
+
 export async function getSession  () {
 
     const { setUser } = useUser()
@@ -30,11 +41,16 @@ export async function getSession  () {
     
         const { data, error } = await supabase.auth.getSession()
     
-        if (error) throw error
+        if (error) {
+            setUser(null)
+            store.commit('setAuthenticated', false)
+            throw error
+        }
     
         if (data.session && data.session.user) {
             console.log('data.session.user', data.session.user)
             setUser(data.session.user)
+            store.commit('setAuthenticated', true)
         }
     
         return data.session

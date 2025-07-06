@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "nombreParada": "Xàtiva",
+    "tipoTransporte": "Metrovalencia",
+    "hora": "08:30"
+  },
+  {
+    "id": 2,
+    "nombreParada": "Nueva Parada",
+    "tipoTransporte": "EMT",
+    "hora": "19:00"
+  }
+]

@@ -1,7 +1,25 @@
 <template>
-  <v-card v-if="selectedMarker" class="card pa-0" :class="{ 'mt-0 ': $vuetify.display.mobile }" style="height: 86vh; position: relative;">
+  <v-card v-if="selectedMarker" class="card pa-0 pb-4" :class="{ 'mt-0 ': $vuetify.display.mobile }" style="height: 80vh; position: relative;">
     <div class="card-content">
-      <v-container>
+      
+    <v-col cols="12" class="sticky-top">
+      <v-row>
+        <v-col cols="6" sm="6" class="text-left mt-0">
+          <v-btn
+            @click="toggleFavorite(selectedMarker)"
+            :color="isFavourite ? 'red' : 'white'"
+            class="favorite-btn"
+          >
+            <v-icon :icon="isFavourite ? 'mdi-heart' : 'mdi-heart-outline'"></v-icon>
+          </v-btn>
+        </v-col>
+        <v-col cols="6" sm="6" class="text-right">
+          <v-btn density="compact" variant="text" icon @click="fCloseCard">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-col>
+      </v-row>
+    </v-col>
       <v-tabs-window v-model="tab">
         <v-tabs-window-item value="tab-1">
           <TpsGeneralMetrovalenciaInfo @closeCard="fCloseCard" :selectedMarker="selectedMarker" />
@@ -11,7 +29,6 @@
         </v-tabs-window-item>
       </v-tabs-window>
       
-      </v-container>
     </div>
 
     <v-card-actions class="bottom-tabs">

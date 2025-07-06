@@ -23,7 +23,8 @@ const BackEmtServices = {
                 console.log("Error al obtener los horarios de la parada", error);
                 return error;
             });
-    }
+    },
+
 };
 
 

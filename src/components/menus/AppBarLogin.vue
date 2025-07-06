@@ -25,7 +25,7 @@ export default {
     computed: {
         // Computed property que comprueba si hay un token en el localStorage
         isLogged() {
-            return !!localStorage.getItem('sb-sjobgbzfbmlqikjxwjli-auth-token');
+            return this.$store.state.isAuthenticated;
         }
     }
 }

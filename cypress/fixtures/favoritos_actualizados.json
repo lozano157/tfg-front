@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "nombreParada": "Colón",
+    "tipoTransporte": "Metrovalencia"
+  },
+  {
+    "id": 2,
+    "nombreParada": "Nueva Parada Favorita",
+    "tipoTransporte": "EMT"
+  }
+]

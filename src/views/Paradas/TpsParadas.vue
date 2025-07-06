@@ -45,37 +45,11 @@ export default {
   components: { TpsEmtCard, TpsEmtValenbisi, TpsMetrovalenciaCard },
   data() {
     return {
+      map: null, // Variable para almacenar la instancia del mapa
       dFilterByFavorites: false, // Variable para filtrar por favoritos
       BackServices,
       markersData: {
-        type: 'FeatureCollection',
-        features: [
-          {
-            type: 'Feature',
-            geometry: { type: 'Point', coordinates: [-0.35718930875529287, 39.48549520152587] },
-            properties: { tipo: 'emt', id_parada: 965 }
-          },
-          {
-            type: 'Feature',
-            geometry: { type: 'Point', coordinates: [-0.3604238515616531, 39.46165728299867] },
-            properties: { tipo: 'emt', id_parada: 1664 }
-          },
-          {
-            type: 'Feature',
-            geometry: { type: 'Point', coordinates: [-0.33868628941726814, 39.42987965327529] },
-            properties: { tipo: 'emt', id_parada: 2208 }
-          },
-          {
-            type: 'Feature',
-            geometry: { type: 'Point', coordinates: [-0.37962375529688247, 39.4737794996143] },
-            properties: { tipo: 'emt', id_parada: 2214 }
-          },
-          {
-            type: 'Feature',
-            geometry: { type: 'Point', coordinates: [-0.40613648554970433, 39.47850636088407] },
-            properties: { tipo: 'valenbisi', id_parada: 244 }
-          }
-        ]
+        
       },
       selectedMarker: null,
       favorites: [],
@@ -83,28 +57,33 @@ export default {
     }
   },
   async mounted() {
-    const map = await this.initializeMap(import.meta.env.VITE_MAPLIBRE_API_KEY);
-    this.addMapLayers(map);
-    this.getUserLocation(map); // Obtiene la ubicación del usuario
+    
+    this.map = await this.initializeMap(import.meta.env.VITE_MAPLIBRE_API_KEY);//crea la instancia del mapa
 
-    // Carga los markers después de inicializar el mapa
-    await this.fetchMarkers();
-    map.getSource('markers').setData(this.markersData); // Actualiza los datos dinámicamente
+    this.addMapLayers();//añade las capas al mapa
+
+    this.getUserLocation(); // Obtiene la ubicación del usuario
+
+  },
+  watch: {
+    dFilterByFavorites(newValue) {
+      this.fetchMarkers(); // Vuelve a cargar los marcadores al cambiar el filtro
+    }
   },
   methods: {
     async initializeMap(apiKey) {
       return new Promise((resolve) => {
-        const map = new maplibregl.Map({
+        this.map = new maplibregl.Map({
           container: 'map',
           style: `https://api.maptiler.com/maps/streets/style.json?key=${apiKey}`,
           center: [-0.3785, 39.4699],
-          zoom: 12
+          zoom: 16
         })
-        map.on('load', () => resolve(map))
+        this.map.on('load', () => resolve(this.map))
       })
     },
-    addMapLayers(map) {
-      map.addSource('markers', {
+    addMapLayers() {
+      this.map.addSource('markers', {
         type: 'geojson',
         data: this.markersData,
         cluster: true,
@@ -112,7 +91,7 @@ export default {
         clusterRadius: 50
       })
 
-      map.addLayer({
+      this.map.addLayer({
         id: 'clusters',
         type: 'circle',
         source: 'markers',
@@ -120,7 +99,7 @@ export default {
         paint: { 'circle-color': '#51bbd6', 'circle-radius': 20 }
       })
 
-      map.addLayer({
+      this.map.addLayer({
         id: 'cluster-count',
         type: 'symbol',
         source: 'markers',
@@ -128,7 +107,7 @@ export default {
         layout: { 'text-field': '{point_count_abbreviated}', 'text-size': 12 }
       })
 
-      map.addLayer({
+      this.map.addLayer({
         id: 'unclustered-point',
         type: 'circle',
         source: 'markers',
@@ -147,15 +126,18 @@ export default {
         }
       })
 
-      map.on('click', 'clusters', (e) => this.zoomCluster(map, e))
-      map.on('click', 'unclustered-point', (e) => this.selectMarker(e))
-      map.getSource('markers').setData(this.markersData)
+      this.map.on('click', 'clusters', (e) => this.zoomCluster(this.map, e))
+      this.map.on('click', 'unclustered-point', (e) => this.selectMarker(e))
+      this.map.getSource('markers').setData(this.markersData)
+      this.map.on('moveend', () => {
+        this.fetchMarkers();
+      });
     },
-    zoomCluster(map, e) {
+    zoomCluster( e) {
       const clusterId = e.features[0].properties.cluster_id
-      map.getSource('markers').getClusterExpansionZoom(clusterId, (err, zoom) => {
+      this.map.getSource('markers').getClusterExpansionZoom(clusterId, (err, zoom) => {
         if (!err) {
-          map.easeTo({ center: e.features[0].geometry.coordinates, zoom })
+          this.map.easeTo({ center: e.features[0].geometry.coordinates, zoom })
         }
       })
     },
@@ -169,7 +151,7 @@ export default {
     isFavorite(marker) {
       return this.favorites.includes(marker.id_parada)
     },
-    getUserLocation(map) {
+    getUserLocation() {
       if ('geolocation' in navigator) {
         navigator.geolocation.getCurrentPosition(
           (position) => {
@@ -180,9 +162,9 @@ export default {
             new maplibregl.Marker({ color: '#0000FF' }) // Color azul para distinguir la ubicación del usuario
               .setLngLat(this.userLocation)
               .setPopup(new maplibregl.Popup().setText('Usted está aquí'))
-              .addTo(map)
+              .addTo(this.map)
 
-            map.flyTo({ center: this.userLocation, zoom: 14 })
+            this.map.flyTo({ center: this.userLocation, zoom: 16 })
           },
           (error) => {
             console.error('Error al obtener la ubicación:', error)
@@ -192,10 +174,41 @@ export default {
         console.error('Geolocalización no está disponible en este navegador.')
       }
     },
-    async fetchMarkers() {
-      const response = await this.BackServices.fGetMarkers()
+    async fetchMarkers(){
+      console.log(this.dFilterByFavorites)
+      if (this.dFilterByFavorites) {
+        await this.fetchFavouriteMarkers();
+      } else {
+        await this.fetchAllMarkers();
+      }
+    },
+    async fetchAllMarkers() {
+      console.log(this.map)
+      console.log(this.map.getBounds())
+      const boundsRaw = this.map.getBounds()
+      const bounds = {
+        sw: boundsRaw.getSouthWest().toArray(), // [lng, lat]
+        ne: boundsRaw.getNorthEast().toArray()  // [lng, lat]
+      }
+      const response = await this.BackServices.fGetMarkers(bounds)
       console.log(response)
       this.markersData = response
+      
+      this.map.getSource('markers').setData(this.markersData);
+    },
+    async fetchFavouriteMarkers() {
+      console.log(this.map)
+      console.log(this.map.getBounds())
+      const boundsRaw = this.map.getBounds()
+      const bounds = {
+        sw: boundsRaw.getSouthWest().toArray(), // [lng, lat]
+        ne: boundsRaw.getNorthEast().toArray()  // [lng, lat]
+      }
+      const response = await this.BackServices.fGetFavouriteMarkers(bounds)
+      console.log(response)
+      this.markersData = response
+      
+      this.map.getSource('markers').setData(this.markersData);
     },
     fCloseCard() {
       this.selectedMarker = null

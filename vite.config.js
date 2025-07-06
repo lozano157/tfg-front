@@ -7,7 +7,6 @@ export default defineConfig({
   base: '/', // Asegura que la base de las rutas sea correcta para Vercel
   plugins: [
     vue(),
-    vueDevTools(),
   ],
   resolve: {
     alias: {

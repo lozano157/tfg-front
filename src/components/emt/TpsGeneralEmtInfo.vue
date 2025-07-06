@@ -1,27 +1,6 @@
 <template>
   <div>
-    <v-col cols="12" class="sticky-top">
-      <v-row>
-        <v-col cols="6" sm="6" class="text-left mt-0">
-          <v-btn
-            @click="toggleFavorite(selectedMarker)"
-            :color="isFavourite ? 'red' : 'white'"
-            class="favorite-btn"
-          >
-            <v-icon :icon="isFavourite ? 'mdi-heart' : 'mdi-heart-outline'"></v-icon>
-          </v-btn>
-        </v-col>
-        <v-col cols="6" sm="6" class="text-right">
-          <v-btn density="compact" variant="text" icon @click="fCloseCard">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-col>
-      </v-row>
-    </v-col>
 
-    <v-col cols="12" v-if="dDatosParada != null">
-      <h3>{{ this.dDatosParada.denominacion }}</h3>
-    </v-col>
     <v-col cols="12" v-if="this.dHorariosParada != null">
       <v-row>
         <v-col v-for="item in dHorariosParada" :key="item" cols="12">
@@ -51,7 +30,6 @@ export default {
   data() {
     return {
       BackEmtServices,
-      dDatosParada: null,
       dHorariosParada: null
     }
   },
@@ -79,7 +57,6 @@ export default {
 
           this.fGetHorariosParada(response)
         } else {
-          debugger
           if (retryCount < maxRetries) {
             console.log(`Retrying... (${retryCount + 1}/${maxRetries})`) // eslint-disable-line no-console
             await this.fGetParadaById(retryCount + 1, maxRetries)
@@ -89,7 +66,6 @@ export default {
           }
         }
       } catch (error) {
-        debugger
         console.error(error) // eslint-disable-line no-console
 
         if (retryCount < maxRetries) {

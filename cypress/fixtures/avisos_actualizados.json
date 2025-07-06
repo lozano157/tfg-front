@@ -1,0 +1,16 @@
+[
+  {
+    "idAlerta": 3,
+    "nombreParada": "Plaza España",
+    "tipoTransporte": "EMT",
+    "mensaje": "Este es un nuevo aviso de prueba",
+    "fechaCreacion": "2025-07-06T11:00:00Z"
+  },
+  {
+    "idAlerta": 1,
+    "nombreParada": "Ayuntamiento",
+    "tipoTransporte": "EMT",
+    "mensaje": "Aviso inicial de prueba",
+    "fechaCreacion": "2025-07-06T10:00:00Z"
+  }
+]
